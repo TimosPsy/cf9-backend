@@ -1,5 +1,8 @@
-import { after } from "node:test";
-import User, { IUser } from "../models/user.model";
+import User, {IUser} from '../models/user.model';
+
+export const findAll = async():Promise<IUser[]> => {
+  return await User.find().populate('roles').lean().exec();
+}
 
 export const findByEmail = async(email: string): Promise<IUser | null> => {
   return await User.findOne({email: email}).populate('roles').lean().exec();
@@ -11,5 +14,5 @@ export const createUser = async (data: Partial<IUser>):Promise<IUser> => {
 }
 
 export const updateUser = async(username: string, payload: Partial<IUser>):Promise<IUser | null> =>{
-  return await User.findOneAndUpdate({username: username}, payload, { returnDocument:'after' }).populate('roles').lean().exec()
+  return await User.findOneAndUpdate({username: username}, payload, { new: true }).populate('roles').lean().exec()
 }
