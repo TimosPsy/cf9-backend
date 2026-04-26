@@ -1,4 +1,4 @@
-import {Schema, model, Document, Types} from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
 interface IPhone {type:string, number:string}
 
@@ -19,25 +19,27 @@ export interface IUser extends Document {
   roles:Types.ObjectId[];
 }
 
-const PhoneSchema = new Schema ({
-    type:String,
-    number:String
+const PhoneSchema = new Schema<IPhone>({
+  type: String, 
+  number: String
 })
 
-const UserSchema = new Schema<IUser> ({
-    username: {type:String, required: true, unique: true},
-    password: {type:String, required: true},
-    firstname:String,
-    lastname:String,
-    email:{type:String, unique: true},
-    address: {
-        area:String,
-        street:String,
-        number:String,
-        municipality:String
-    },
-    phone: [PhoneSchema],
-    roles: [{
+const UserSchema = new Schema<IUser>({
+  username: { type:String, required: true, unique:true },
+  password: { type:String, required: true},
+  firstname: String,
+  lastname: String,
+  // email: { type: String, index:true} απλά δημιουργεί index
+  email: { type: String, unique: true },
+  address: {
+    area: String,
+    street: String,
+    number: String,
+    po: String,
+    municipality: String
+  },
+  phone: [PhoneSchema],
+  roles: [{
     type: Schema.Types.ObjectId,
     ref: "Role",
     required: true
