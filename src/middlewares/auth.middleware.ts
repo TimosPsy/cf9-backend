@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 declare global {
   namespace Express {
@@ -7,7 +10,7 @@ declare global {
   }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'changeme';
+const JWT_SECRET = process.env.JWT_SECRET || 'mykey';
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const header = req.headers.authorization;
